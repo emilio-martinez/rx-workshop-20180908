@@ -11,8 +11,10 @@ const subB = subject.subscribe(observerB);
 
 subject.next(1);
 subject.next(2);
+subA.unsubscribe();
 subject.next(3);
 subject.next(4);
+subB.unsubscribe();
 subject.next(5);
 subject.complete();
 
