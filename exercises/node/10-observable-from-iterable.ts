@@ -3,7 +3,11 @@ import { from } from 'rxjs';
 // that supports the iterable interface.
 import { iterable } from './fixtures/10-iterable';
 
+// Also iterables such as Set
+const set = new Set([0, 1, 2, 3, 4, 5]);
+
 // TODO: create an observable the `data` array with `Observable.from`
+const source$ = from(set);
 
 console.log('start');
 source$.subscribe(
