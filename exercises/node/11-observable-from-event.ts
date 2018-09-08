@@ -14,6 +14,21 @@ resource.removeEventListener('data', handler); // stop listening for data events
 HINT: You'll probably have to create the `Resource` first.
 */
 
+const resource = new Resource(); // start the resource;
+const source$ = fromEvent(resource, 'data');
+
+/**
+ * Can take several kinds of event patterns
+ * - EventTarget (DOM): addEventListener/removeEventListener
+ * - EventEmitter (Node): addListener/removeListener
+ * - JQuery/Node-style: on/off
+ */
+
+/**
+ * Important difference vs exercise 6:
+ * Here, the resource exists outside of the observable creation, which is known as Hot.
+ * Exercise 6 is an example of a Cold observable because the producer is only created until you subscribe.
+ */
 
 const subscription = source$.subscribe(
   x => console.log(x),
