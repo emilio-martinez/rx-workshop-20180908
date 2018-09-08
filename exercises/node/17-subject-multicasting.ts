@@ -1,5 +1,5 @@
-import { Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Subject, ConnectableObservable } from 'rxjs';
+import { filter, publish, refCount, multicast, share } from 'rxjs/operators';
 import { scarce$ } from './fixtures/17-scarce';
 import { createLoggingObserver } from './helpers/createLoggingObserver';
 
@@ -13,6 +13,42 @@ const fizzbuzzObserver = createLoggingObserver('fizzbuzz');
   2. Notify `buzzObserver` of all values from `scarce$` divisible by 5.
   3. Notify `fizzbuzzObserver` of all values from `scarce$` divisible by 3 AND 5.
 */
+
+const divisibleBy = (num: number) => filter((v: number) => (v % num === 0));
+
+// const subject = new Subject<number>();
+// subject.pipe(divisibleBy(3)).subscribe(fizzObserver);
+// subject.pipe(divisibleBy(5)).subscribe(buzzObserver);
+// subject.pipe(divisibleBy(3 * 5)).subscribe(fizzbuzzObserver);
+// scarce$.subscribe(subject);
+
+
+// OR
+
+/**
+ * Use publish to multicast via a Subject automatically and have it unsubscribe via refCount
+ *
+ * publish === multicast(subject) + ConnectableObservable.connect()
+ * refCount unsubscribes when the subscription count goes down to zero
+ */
+
+// const shared$ = scarce$.pipe(publish(), refCount());
+// shared$.pipe(divisibleBy(3)).subscribe(fizzObserver);
+// shared$.pipe(divisibleBy(5)).subscribe(buzzObserver);
+// shared$.pipe(divisibleBy(3 * 5)).subscribe(fizzbuzzObserver);
+
+// OR
+
+/**
+ * Use share()
+ *
+ * share === publish() + refCount()
+ */
+
+const shared$ = scarce$.pipe(share());
+shared$.pipe(divisibleBy(3)).subscribe(fizzObserver);
+shared$.pipe(divisibleBy(5)).subscribe(buzzObserver);
+shared$.pipe(divisibleBy(3 * 5)).subscribe(fizzbuzzObserver);
 
 /**
   NOTE: expected output
