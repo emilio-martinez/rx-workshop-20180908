@@ -1,7 +1,7 @@
 import { of } from 'rxjs';
 
 // TODO: create an observable of 'foo', 'bar' and 'baz' with `Observable.of`
-
+const source$ = of('foo', 'bar', 'baz');
 
 console.log('start');
 source$.subscribe(
