@@ -3,6 +3,7 @@ import { from } from 'rxjs';
 const data = ['apples', 'bananas', 'oranges'];
 
 // TODO: create an observable the `data` array with `Observable.from`
+const source$ = from(data);
 
 console.log('start');
 source$.subscribe(
