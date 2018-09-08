@@ -15,6 +15,17 @@ const sourceC$ = noisyUnsubscriber('c');
   2. unsubscribe from `sourceA$` after 900ms
   3. unsubscribe from the other two after 1300ms
 */
+
+merge(
+  sourceA$.pipe(takeUntil(timer(900))),
+  sourceB$,
+  sourceC$
+).pipe(takeUntil(timer(1300)))
+.subscribe({
+  next: console.log,
+  complete: () => console.log('DONE')
+})
+
 /**
   NOTE: expected output
   a: 0
