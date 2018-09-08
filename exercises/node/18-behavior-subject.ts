@@ -24,12 +24,19 @@ import { meatspaceSystem, temp$ } from './fixtures/18-meatspace';
   2. Be sure the users don't have to wait for the first value.
 */
 
+const behaviorSubject = new BehaviorSubject(0);
+
+temp$.subscribe(behaviorSubject);
+
 meatspaceSystem((user) => {
   // TODO: notify users with `user.sendTemperature(temp)`
+  const subscription =
+    behaviorSubject.subscribe(temp => user.sendTemperature(temp))
 
   // `user.onleave` is called when the user stop watching values
   user.onleave = () => {
     // TODO: stop sending temps to the user when they leave
+    subscription.unsubscribe();
   }
 });
 
