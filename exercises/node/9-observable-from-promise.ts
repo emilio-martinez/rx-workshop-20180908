@@ -3,6 +3,7 @@ import { from } from 'rxjs';
 const promise = Promise.resolve('still useful!');
 
 // TODO: create an observable the Promise using `Observable.from`
+const source$ = from(promise);
 
 console.log('start');
 source$.subscribe(
