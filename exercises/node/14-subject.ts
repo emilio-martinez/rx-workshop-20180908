@@ -9,6 +9,15 @@ const observerB = createLoggingObserver('B');
 // TODO: Try nexting after complete.
 // TODO: Try the same thing with `subject.error()` instead of complete
 
+const subscriber = new Subject();
+subscriber.subscribe(observerA);
+subscriber.subscribe(observerB);
+
+subscriber.next(1);
+subscriber.next(2);
+subscriber.next(3);
+subscriber.complete();
+subscriber.next(4);
 
 /**
   NOTE: expected output
