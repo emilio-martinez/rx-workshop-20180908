@@ -5,7 +5,19 @@
   const svg  = document.querySelector('svg');
 
   const { Observable, fromEvent } = rxjs;
-  const { mergeMap, scan, map, startWith, concat } = rxjs.operators;
+  const {
+    concat,
+    concatAll,
+    concatMap,
+    map,
+    mergeAll,
+    mergeMap,
+    scan,
+    startWith,
+    switchAll,
+    switchMap,
+    tap
+  } = rxjs.operators;
 
   const dropClick$ = fromEvent(drop, 'click');
 
@@ -44,7 +56,28 @@
         }
   */
 
-
-
-  // our stream of drop clicks
+dropClick$.pipe(
+    mergeMap(() =>
+      addBall(svg).pipe(
+        map(() => ({ type: 'BALL_DROP_MOVE' })),
+        startWith({ type: 'BALL_DROP_START' }),
+        concat([{ type: 'BALL_DROP_END' }]),
+      )
+    ),
+    scan((state, { type }) => {
+      switch (type) {
+        case 'BALL_DROP_START':
+          return { ...state, dropped: state.dropped + 1 };
+        case 'BALL_DROP_END':
+          return { ...state, completed: state.completed + 1 };
+      }
+      return { ...state }
+    }, {
+      dropped: 0,
+      completed: 0
+    }),
+  ).subscribe(state => {
+    dropped.textContent = state.dropped;
+    completed.textContent = state.completed;
+  });
 }());
