@@ -1,4 +1,4 @@
-# rx-workshop-1
+# Exercises from Rx Workshop Sept 08, 2018
 
 ### Requirements
 
@@ -20,7 +20,7 @@ You need to install two things globally:
 
 To install these: 
 
-```
+```sh
 npm i -g ts-node typescript
 ```
 
@@ -32,9 +32,9 @@ Exercises can be found under the `exercises/` directory. The `exercises-final/` 
 
 In console just run ts-node like so:
 
-```
+```sh
 ts-node exercises/node/1-subscribe-with-callbacks.ts
-```g
+```
 
 ### Demo Server
 
@@ -42,6 +42,6 @@ Some of the exercises (the ones found under `exercises/browser/` require a serve
 because of either permissions, requiring an HTTP backend or requiring a WebSocket connection. To run
 the demo server just run
 
-```
+```sh
 npm run start
 ```
